@@ -13,7 +13,7 @@ class ProjectController extends Controller
 {
     public function index($alias)
     {
-        $project = Project::with(['Category', 'Company', 'Comments.User'])->where('alias', $alias)->where('status', 'active')->first();
+        $project = Project::with(['Category', 'Company', 'Comments.User', 'Galleries'])->where('alias', $alias)->where('status', 'active')->first();
 
         if (!$project) {
             throw new NotFoundException('Project not found');
@@ -31,6 +31,7 @@ class ProjectController extends Controller
             'content' => $project->content,
             'status' => $project->status,
             'comments' => $project->Comments,
+            'gallery' => $project->Galleries,
         ];
 
         return response()->json($formatted);

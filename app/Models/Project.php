@@ -45,4 +45,9 @@ class Project extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function Galleries()
+    {
+        return $this->hasMany(Gallery::class);
+    }
 }

@@ -22,13 +22,12 @@ class PlansController extends Controller
         return response()->json($plans);
     }
 
-    public function create(Request $request)
+    public function create($alias, Request $request)
     {
         $user = $request->user();
+        $project = Project::where('alias', $alias)->first();
 
         $validator = Validator::make($request->all(), [
-            'project_id' => 'required|string',
-            'company_id' => 'required|string',
             'title' => 'required|string',
             'content' => 'required|string',
             'price' => 'required|numeric',
@@ -40,7 +39,7 @@ class PlansController extends Controller
 
         $validated = $validator->validated();
 
-        $user->Companies()->find($request->company_id)->Projects()->find($request->project_id)->Plans()->create($validated);
+        $user->Companies()->find($project->Company->id)->Projects()->where('alias', $alias)->Plans()->create($validated);
 
         return response()->json(['error' => null]);
     }

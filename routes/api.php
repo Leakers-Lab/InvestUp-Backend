@@ -34,11 +34,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Router for Plans
     Route::group(['middleware' => 'status'], function () {
         // Router for Project
-        Route::post('/new/project', [\App\Http\Controllers\Company\Project\ProjectController::class, 'create']);
+        Route::post('/project/add', [\App\Http\Controllers\Company\Project\ProjectController::class, 'create']);
 
         // Router for Project Plans
-        Route::post('/projects/plans/add', [\App\Http\Controllers\Company\Project\ProjectsController::class, 'create']);
-        Route::post('/projects/comments/add', [\App\Http\Controllers\User\Comments\CommentsController::class, 'create']);
+        Route::post('/projects/{alias}/plans/add', [\App\Http\Controllers\Company\Project\ProjectsController::class, 'create']);
+        Route::post('/projects/{alias}/comments/add', [\App\Http\Controllers\User\Comments\CommentsController::class, 'create']);
+        Route::post('/projects/{alias}/gallery/add', [\App\Http\Controllers\Company\Project\GalleryController::class, 'create']);
 
         // Router for Company
         Route::post('/company/register', [\App\Http\Controllers\Company\CompanyController::class, 'create']);
