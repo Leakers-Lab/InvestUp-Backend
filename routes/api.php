@@ -34,6 +34,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Router for Plans
     Route::group(['middleware' => 'status'], function () {
         // Router for Project
+        Route::get('/user', [\App\Http\Controllers\User\ProfileController::class, 'index']);
+
+        // Router for Project
         Route::post('/project/add', [\App\Http\Controllers\Company\Project\ProjectController::class, 'create']);
 
         // Router for Project Plans
