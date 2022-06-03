@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function index(Request $request)
+    public function index($alias)
     {
-        $project = Project::with(['Category', 'Company'])->where('alias', $request['alias'])->where('status', 'active')->first();
+        $project = Project::with(['Category', 'Company'])->where('alias', $alias)->where('status', 'active')->first();
 
         if (!$project) {
             throw new NotFoundException('Project not found');

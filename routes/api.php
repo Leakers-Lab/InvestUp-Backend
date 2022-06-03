@@ -18,9 +18,15 @@ use Illuminate\Support\Facades\Route;
 });*/
 
 // Router for get all active categories
+Route::get('/companies', [\App\Http\Controllers\Company\CompaniesController::class, 'index']);
+Route::get('/company/{alias}', [\App\Http\Controllers\Company\CompanyController::class, 'index']);
+
+// Router for get all active categories
 Route::get('/categories', [\App\Http\Controllers\Company\Category\CategoriesController::class, 'index']);
+Route::get('/category/{alias}', [\App\Http\Controllers\Company\Category\CategoryController::class, 'index']);
 
 // Router for get project
+Route::get('/projects', [\App\Http\Controllers\Company\Project\ProjectsController::class, 'index']);
 Route::get('/project/{alias}', [\App\Http\Controllers\Company\Project\ProjectController::class, 'index']);
 
 // Router for auth
