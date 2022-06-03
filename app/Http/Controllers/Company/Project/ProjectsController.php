@@ -10,9 +10,16 @@ use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::with(['Category', 'Company'])->where('status', 'active')->get();
+        if (isset($request->search)) {
+            $projects = Project::with(['Category', 'Company'])
+                ->where('title', 'like', '%' . $request->search . '%')
+                ->where('status', 'active')
+                ->pagination(15);
+        } else {
+            $projects = Project::with(['Category', 'Company'])->where('status', 'active')->get();
+        }
 
         foreach ($projects as $project) {
             $formatted[] = [
