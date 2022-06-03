@@ -60,7 +60,7 @@ class CompanyController extends Controller
 
         $validated = $validator->validated();
 
-        $alias = $this->str2url($validated['alias']);
+        $alias = $this->str2url($validated['title']);
 
         $company = $user->Companies([
             'title' => $validated['title'],
