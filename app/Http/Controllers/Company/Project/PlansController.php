@@ -39,7 +39,7 @@ class PlansController extends Controller
 
         $validated = $validator->validated();
 
-        $user->Companies()->find($project->Company->id)->Projects()->where('alias', $alias)->Plans()->create($validated);
+        $user->Companies()->Projects()->find($project->id)->Plans()->create($validated);
 
         return response()->json(['error' => null]);
     }
