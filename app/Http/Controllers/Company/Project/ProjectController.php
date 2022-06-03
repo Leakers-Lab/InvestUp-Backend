@@ -30,6 +30,6 @@ class ProjectController extends Controller
             'status' => $project->status,
         ];
 
-        return response()->json($formatted, 200);
+        return response()->json($formatted);
     }
 }

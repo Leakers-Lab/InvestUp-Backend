@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Company;
 
 use App\Exceptions\NotFoundException;
+use App\Exceptions\ValidationException;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
@@ -37,6 +39,38 @@ class CompanyController extends Controller
         }
         $company['projects'] = $formatted;
 
-        return response()->json($company, 200);
+        return response()->json($company);
+    }
+
+    public function new(Request $request)
+    {
+        $user = $request->user();
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string',
+            'address' => 'required|string',
+            'phone' => 'required',
+            'image' => 'required|string',
+            'bg-image' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator->errors());
+        }
+
+        $validated = $validator->validated();
+
+        $alias = $this->str2url($validated['alias']);
+
+        $company = $user->Companies([
+            'title' => $validated['title'],
+            'alias' => $alias,
+            'address' => $validated['address'],
+            'phone' => $validated['phone'],
+            'image' => $validated['image'],
+            'bg-image' => $validated['bg-image'],
+        ]);
+
+        return response()->json(['error' => null]);
     }
 }

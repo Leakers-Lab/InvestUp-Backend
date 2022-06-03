@@ -29,7 +29,7 @@ class ProjectsController extends Controller
             ];
         }
 
-        return response()->json($formatted, 200);
+        return response()->json($formatted);
     }
 
 }

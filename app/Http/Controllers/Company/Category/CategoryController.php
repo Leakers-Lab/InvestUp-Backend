@@ -17,6 +17,6 @@ class CategoryController extends Controller
             throw new NotFoundException('Category not found');
         }
 
-        return response()->json($category, 200);
+        return response()->json($category);
     }
 }

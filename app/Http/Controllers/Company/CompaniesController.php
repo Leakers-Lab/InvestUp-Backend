@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
-use Illuminate\Http\Request;
 
 class CompaniesController extends Controller
 {
@@ -12,6 +11,6 @@ class CompaniesController extends Controller
     {
         $companies = Company::all();
 
-        return response()->json($companies, 200);
+        return response()->json($companies);
     }
 }

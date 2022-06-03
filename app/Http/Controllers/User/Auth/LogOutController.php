@@ -11,6 +11,6 @@ class LogOutController extends Controller
     {
         $request->user()->tokens()->delete();
 
-        return response()->json(['error' => 'null'], 200);
+        return response()->json(['error' => null]);
     }
 }
