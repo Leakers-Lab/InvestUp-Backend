@@ -6,18 +6,23 @@ use App\Exceptions\NotBelongsException;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ValidationException;
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
 class PlansController extends Controller
 {
-    public function index(Request $request)
+    public function index($alias)
     {
+        $project = Project::where('alias', $alias)->first();
 
+        $plans = $project->Plans;
+
+        return response()->json($plans);
     }
 
-    public function addPlan(Request $request)
+    public function create(Request $request)
     {
         $user = $request->user();
 
@@ -27,7 +32,6 @@ class PlansController extends Controller
             'title' => 'required|string',
             'content' => 'required|string',
             'price' => 'required|numeric',
-            'string' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -36,7 +40,7 @@ class PlansController extends Controller
 
         $validated = $validator->validated();
 
-        $user->Companies()->Projects()->Plans()->create($validated);
+        $user->Companies()->find($request->company_id)->Projects()->find($request->project_id)->Plans()->create($validated);
 
         return response()->json(['error' => null]);
     }
