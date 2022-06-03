@@ -42,7 +42,7 @@ class CompanyController extends Controller
         return response()->json($company);
     }
 
-    public function new(Request $request)
+    public function create(Request $request)
     {
         $user = $request->user();
 

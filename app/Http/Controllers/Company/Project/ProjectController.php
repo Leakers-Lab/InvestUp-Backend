@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Company\Project;
 
 use App\Exceptions\NotFoundException;
+use App\Exceptions\ValidationException;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
 {
@@ -31,5 +33,39 @@ class ProjectController extends Controller
         ];
 
         return response()->json($formatted);
+    }
+
+    public function create(Request $request)
+    {
+        $user = $request->user();
+
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|integer',
+            'company_id' => 'required|integer',
+            'title' => 'required|string',
+            'target' => 'required|integer',
+            'deadline' => 'required|datetime',
+            'content' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator->errors());
+        }
+
+        $validated = $validator->validated();
+
+        $alias = md5($validated['title'] . time());
+
+        $company = $user->Companies()->find($validated['company_id'])->Projects()->create([
+            'category_id' => $validated['category_id'],
+            'company_id' => $validated['category_id'],
+            'title' => $validated['title'],
+            'alias' => $alias,
+            'target' => $validated['target'],
+            'deadline' => $validated['deadline'],
+            'content' => $validated['image'],
+        ]);
+
+        return response()->json(['error' => null]);
     }
 }
