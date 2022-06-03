@@ -33,6 +33,7 @@ class ProjectsController extends Controller
                 'target' => $project->target,
                 'deadline' => $project->target,
                 'content' => $project->content,
+                'image' => $project->image,
                 'status' => $project->status,
             ];
         }

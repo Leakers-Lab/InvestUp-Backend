@@ -29,9 +29,9 @@ class ProjectController extends Controller
             'target' => $project->target,
             'deadline' => $project->target,
             'content' => $project->content,
+            'image' => $project->image,
             'status' => $project->status,
             'comments' => $project->Comments,
-            'gallery' => $project->Galleries,
         ];
 
         return response()->json($formatted);
@@ -48,6 +48,7 @@ class ProjectController extends Controller
             'target' => 'required|integer',
             'deadline' => 'required|date',
             'content' => 'required|string',
+            'image' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -66,6 +67,7 @@ class ProjectController extends Controller
             'target' => $validated['target'],
             'deadline' => $validated['deadline'],
             'content' => $validated['content'],
+            'image' => $validated['image'],
         ]);
 
         return response()->json(['error' => null]);
@@ -82,6 +84,7 @@ class ProjectController extends Controller
             'target' => 'required|integer',
             'deadline' => 'required|date',
             'content' => 'required|string',
+            'image' => 'required|string',
         ]);
 
         if ($validator->fails()) {
