@@ -33,7 +33,7 @@ Route::get('/project/{alias}', [\App\Http\Controllers\Company\Project\ProjectCon
 Route::post('/register', [\App\Http\Controllers\User\Auth\RegistrationController::class, 'index']);
 Route::post('/login', [\App\Http\Controllers\User\Auth\LoginController::class, 'index']);
 
-Route::group(['middleware' =>'auth:sanctum'], function () {
+Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // Router for logout user
     Route::post('/logout', [\App\Http\Controllers\User\Auth\LogOutController::class, 'index']);

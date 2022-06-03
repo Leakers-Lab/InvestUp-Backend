@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Company\Project;
 
+use App\Exceptions\NotBelongsException;
+use App\Exceptions\NotFoundException;
 use App\Exceptions\ValidationException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,6 +36,8 @@ class PlansController extends Controller
 
         $validated = $validator->validated();
 
+        $user->Companies()->Projects()->Plans()->create($validated);
 
+        return response()->json(['error' => null]);
     }
 }
