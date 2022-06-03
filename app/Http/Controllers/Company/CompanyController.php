@@ -62,7 +62,7 @@ class CompanyController extends Controller
 
         $alias = $this->str2url($validated['title']);
 
-        $company = $user->Companies([
+        $company = $user->Companies->create([
             'title' => $validated['title'],
             'alias' => $alias,
             'address' => $validated['address'],
