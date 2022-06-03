@@ -45,7 +45,7 @@ class ProjectController extends Controller
             'company_id' => 'required|integer',
             'title' => 'required|string',
             'target' => 'required|integer',
-            'deadline' => 'required|datetime',
+            'deadline' => 'required|date',
             'content' => 'required|string',
         ]);
 
@@ -64,7 +64,7 @@ class ProjectController extends Controller
             'alias' => $alias,
             'target' => $validated['target'],
             'deadline' => $validated['deadline'],
-            'content' => $validated['image'],
+            'content' => $validated['content'],
         ]);
 
         return response()->json(['error' => null]);
