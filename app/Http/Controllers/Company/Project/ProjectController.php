@@ -70,4 +70,29 @@ class ProjectController extends Controller
 
         return response()->json(['error' => null]);
     }
+
+    public function update($alias, Request $request)
+    {
+        $user = $request->user();
+
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|integer',
+            'company_id' => 'required|integer',
+            'title' => 'required|string',
+            'target' => 'required|integer',
+            'deadline' => 'required|date',
+            'content' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator->errors());
+        }
+
+        $validated = $validator->validated();
+
+        $project = Project::where('alias', $alias);
+        $project->update($validated);
+
+        return response()->json($project);
+    }
 }

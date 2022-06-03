@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
         // Router for Project
         Route::post('/project/add', [\App\Http\Controllers\Company\Project\ProjectController::class, 'create']);
+        Route::post('/project/{alias}', [\App\Http\Controllers\Company\Project\ProjectController::class, 'update']);
 
         // Router for Project Plans
         Route::post('/project/{alias}/plans/add', [\App\Http\Controllers\Company\Project\PlansController::class, 'create']);
