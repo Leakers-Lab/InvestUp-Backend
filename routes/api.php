@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
-
 // Router for get all active categories
 Route::get('/companies', [\App\Http\Controllers\Company\CompaniesController::class, 'index']);
 Route::get('/company/{alias}', [\App\Http\Controllers\Company\CompanyController::class, 'index']);
