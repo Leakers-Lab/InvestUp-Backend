@@ -71,7 +71,7 @@ class ProjectController extends Controller
         return response()->json(['error' => null]);
     }
 
-    public function update($alias, Request $request)
+    public function update(Request $request, $alias)
     {
         $user = $request->user();
 
@@ -90,7 +90,7 @@ class ProjectController extends Controller
 
         $validated = $validator->validated();
 
-        $project = Project::where('alias', $alias);
+        $project = Project::where('alias', $alias)->first();
         $project->update($validated);
 
         return response()->json($project);
