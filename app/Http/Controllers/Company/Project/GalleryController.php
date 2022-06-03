@@ -31,6 +31,6 @@ class GalleryController extends Controller
             'path' => Storage::url($path)
         ]);
 
-        return response()->json(['error' => null]);
+        return response()->json(['path' => Storage::url($path)]);
     }
 }
