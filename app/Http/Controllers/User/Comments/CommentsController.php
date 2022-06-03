@@ -31,11 +31,4 @@ class CommentsController extends Controller
 
         return response()->json(['error' => null]);
     }
-
-    public function index($alias)
-    {
-        $project = Project::with('Comments.User')->where('alias', $alias)->first();
-
-        return response()->json($project->Comments);
-    }
 }
