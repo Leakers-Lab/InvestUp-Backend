@@ -28,6 +28,8 @@ Route::get('/category/{alias}', [\App\Http\Controllers\Company\Category\Category
 // Router for get project
 Route::get('/projects', [\App\Http\Controllers\Company\Project\ProjectsController::class, 'index']);
 Route::get('/project/{alias}', [\App\Http\Controllers\Company\Project\ProjectController::class, 'index']);
+Route::get('/project/{alias}/plans', [\App\Http\Controllers\Company\Project\ProjectController::class, 'index']);
+Route::get('/project/{alias}/comments', [\App\Http\Controllers\Company\Project\ProjectController::class, 'index']);
 
 // Router for auth
 Route::post('/register', [\App\Http\Controllers\User\Auth\RegistrationController::class, 'index']);
@@ -36,7 +38,8 @@ Route::post('/login', [\App\Http\Controllers\User\Auth\LoginController::class, '
 Route::group(['middleware' => 'auth:sanctum'], function () {
     // Router for Plans
     Route::group(['middleware' => 'status'], function () {
-        Route::get('/projects', [\App\Http\Controllers\Company\Project\ProjectsController::class, 'index']);
+        Route::post('/projects/plans/add', [\App\Http\Controllers\Company\Project\ProjectsController::class, 'create']);
+        Route::post('/projects/comments/add', [\App\Http\Controllers\User\Comments\CommentsController::class, 'create']);
     });
 
     // Router for logout user
