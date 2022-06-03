@@ -34,6 +34,10 @@ Route::post('/register', [\App\Http\Controllers\User\Auth\RegistrationController
 Route::post('/login', [\App\Http\Controllers\User\Auth\LoginController::class, 'index']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    // Router for Plans
+    Route::group(['middleware' => 'status'], function () {
+        Route::get('/projects', [\App\Http\Controllers\Company\Project\ProjectsController::class, 'index']);
+    });
 
     // Router for logout user
     Route::post('/logout', [\App\Http\Controllers\User\Auth\LogOutController::class, 'index']);
