@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class GalleryController extends Controller
@@ -25,9 +26,9 @@ class GalleryController extends Controller
             throw new ValidationException($validator->errors());
         }
 
-        $path = $request->file('file')->store(storage_path('app/public'));
-        $user->Projects()->find($project->id)->Galleries()->create([
-            'path' => $path
+        $path = $request->file('file')->store('/', 'public');
+        $user->Companies->find($project->company_id)->Projects()->find($project->id)->Galleries()->create([
+            'path' => Storage::url($path)
         ]);
 
         return response()->json(['error' => null]);
