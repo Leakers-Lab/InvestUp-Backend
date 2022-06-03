@@ -68,7 +68,7 @@ class CompanyController extends Controller
             'address' => $validated['address'],
             'phone' => $validated['phone'],
             'image' => $validated['image'],
-            'bg-image' => $validated['bg-image'],
+            'bg-image' => $validated['bg-image'] ?? null,
         ]);
 
         return response()->json(['error' => null]);

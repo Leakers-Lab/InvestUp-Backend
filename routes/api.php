@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/projects/comments/add', [\App\Http\Controllers\User\Comments\CommentsController::class, 'create']);
 
         // Router for create new Company
-        Route::post('/company/register', [\App\Http\Controllers\Company\CompanyController::class, 'new']);
+        Route::post('/register/company', [\App\Http\Controllers\Company\CompanyController::class, 'new']);
     });
 
     // Router for logout user
