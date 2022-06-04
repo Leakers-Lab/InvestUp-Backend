@@ -39,7 +39,7 @@ class ProfileController extends Controller
 
         if (!empty($request->file('image'))) {
             $path = $request->file('image')->store('/', 'public');
-            $validated['image'] = env('APP_URL') . Storage::url($path);
+            $validated['image'] = "http://server.investup.uz" .Storage::url($path);
         }
 
         if (!empty($validated['password'])) {

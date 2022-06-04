@@ -64,12 +64,12 @@ class CompanyController extends Controller
 
         if (!empty($request->file('image'))) {
             $path = $request->file('image')->store('/', 'public');
-            $validated['image'] = env('APP_URL') . Storage::url($path);
+            $validated['image'] = "http://server.investup.uz" .Storage::url($path);
         }
 
         if (!empty($request->file('bg-image'))) {
             $path1 = $request->file('bg-image')->store('/', 'public');
-            $validated['bg-image'] = env('APP_URL') . Storage::url($path1);
+            $validated['bg-image'] = "http://server.investup.uz" .Storage::url($path1);
         }
 
         $alias = md5($validated['title'] . time());
@@ -101,12 +101,12 @@ class CompanyController extends Controller
 
         if (!empty($request->file('image'))) {
             $path = $request->file('image')->store('/', 'public');
-            $validated['image'] = env('APP_URL') . Storage::url($path);
+            $validated['image'] = "http://server.investup.uz" .Storage::url($path);
         }
 
         if (!empty($request->file('bg-image'))) {
             $path1 = $request->file('bg-image')->store('/', 'public');
-            $validated['bg-image'] = env('APP_URL') . Storage::url($path1);
+            $validated['bg-image'] = "http://server.investup.uz" .Storage::url($path1);
         }
 
         $company = $user->Companies->where('alias', $alias)->first();

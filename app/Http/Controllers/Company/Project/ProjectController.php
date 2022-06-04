@@ -76,7 +76,7 @@ class ProjectController extends Controller
         $path = $request->file('image')->store('/', 'public');
 
         if (!empty($request->file('image'))) {
-            $validated['image'] = env('APP_URL') . Storage::url($path);
+            $validated['image'] = "http://server.investup.uz" .Storage::url($path);
         }
 
         $company = $user->Companies()->find($validated['company_id'])->Projects()->create($validated);
@@ -107,7 +107,7 @@ class ProjectController extends Controller
 
         if (!empty($request->file('image'))) {
             $path = $request->file('image')->store('/', 'public');
-            $validated['image'] = env('APP_URL') . Storage::url($path);
+            $validated['image'] = "http://server.investup.uz" .Storage::url($path);
         }
 
         $project = $user->Companies()->find($validated['company_id'])->Projects()->where('alias', $alias)->first();
