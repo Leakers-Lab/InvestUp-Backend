@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/project/{alias}/plans/add', [\App\Http\Controllers\Company\Project\PlansController::class, 'create']);
         Route::post('/project/{alias}/comments/add', [\App\Http\Controllers\User\Comments\CommentsController::class, 'create']);
         Route::post('/project/{alias}/gallery/add', [\App\Http\Controllers\Company\Project\GalleryController::class, 'create']);
+        Route::post('/project/{alias}/donation/add', [\App\Http\Controllers\Company\Project\DonationsController::class, 'create']);
 
         // Router for Company
         Route::post('/company/register', [\App\Http\Controllers\Company\CompanyController::class, 'create']);
