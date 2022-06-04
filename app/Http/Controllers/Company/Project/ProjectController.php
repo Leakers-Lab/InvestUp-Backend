@@ -83,13 +83,13 @@ class ProjectController extends Controller
         $path = $request->file('image')->store('/', 'public');
 
         $validator = Validator::make($request->all(), [
-            'category_id' => 'required|integer',
-            'company_id' => 'required|integer',
-            'title' => 'required|string',
-            'target' => 'required|integer',
-            'deadline' => 'required|date',
-            'content' => 'required|string',
-            'image' => Storage::url($path) ?? null,
+            'category_id' => 'nullable|integer',
+            'company_id' => 'nullable|integer',
+            'title' => 'nullable|string',
+            'target' => 'nullable|integer',
+            'deadline' => 'nullable|date',
+            'content' => 'nullable|string',
+            'image' => 'nullable|image'
         ]);
 
         if ($validator->fails()) {
@@ -97,6 +97,8 @@ class ProjectController extends Controller
         }
 
         $validated = $validator->validated();
+
+        $validated['image'] = Storage::url($path) ?? null;
 
         $project = Project::where('alias', $alias)->first();
         $project->update($validated);
