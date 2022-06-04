@@ -13,6 +13,7 @@ class Project extends Model
         'category_id',
         'company_id',
         'title',
+        'description',
         'alias',
         'target',
         'deadline',
