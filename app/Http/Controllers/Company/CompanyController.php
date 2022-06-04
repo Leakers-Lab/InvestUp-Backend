@@ -77,7 +77,7 @@ class CompanyController extends Controller
         $validated['alias'] = $alias;
 
         $company = $user->Companies()->create($validated);
-        $company = Company::find($company);
+
         return response()->json($company);
     }
 
