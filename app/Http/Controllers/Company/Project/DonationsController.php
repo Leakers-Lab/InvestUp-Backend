@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Company\Project;
 
 use App\Exceptions\ValidationException;
 use App\Http\Controllers\Controller;
+use App\Models\Donation;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,6 +17,7 @@ class DonationsController extends Controller
         $user = $request->user();
 
         $validator = Validator::make($request->all(), [
+            'plan_id' => 'required|integer',
             'amount' => 'required|integer',
         ]);
 
@@ -25,8 +27,9 @@ class DonationsController extends Controller
 
         $validated = $validator->validated();
 
-        $project->Plans->Donations->create([
+        Donation::create([
             'user_id' => $user->id,
+            'plan_id' => $validated['plan_id'],
             'amount' => $validated(['amount']),
         ]);
 

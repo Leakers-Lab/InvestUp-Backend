@@ -94,7 +94,7 @@ class ProjectController extends Controller
         $validated = $validator->validated();
 
         if (!empty($request->file('image'))) {
-            $path = $validated['image']->file('image')->store('/', 'public');
+            $path = $request->file('image')->store('/', 'public');
             $validated['image'] = Storage::url($path);
         }
 

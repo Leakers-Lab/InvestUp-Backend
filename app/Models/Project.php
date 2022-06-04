@@ -18,6 +18,7 @@ class Project extends Model
         'deadline',
         'content',
         'price',
+        'image',
         'status',
     ];
 
