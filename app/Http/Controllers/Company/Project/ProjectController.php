@@ -77,8 +77,6 @@ class ProjectController extends Controller
     {
         $user = $request->user();
 
-        $path = $request->file('image')->store('/', 'public');
-
         $validator = Validator::make($request->all(), [
             'category_id' => 'nullable|integer',
             'company_id' => 'nullable|integer',
@@ -95,7 +93,10 @@ class ProjectController extends Controller
 
         $validated = $validator->validated();
 
-        $validated['image'] = Storage::url($path) ?? null;
+        if (!empty($request->file('image'))) {
+            $path = $request->file('image')->store('/', 'public');
+            $validated['image'] = Storage::url($path);
+        }
 
         $project = Project::where('alias', $alias)->first();
         $project->update($validated);

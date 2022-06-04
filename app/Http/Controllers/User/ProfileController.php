@@ -30,8 +30,6 @@ class ProfileController extends Controller
             'image' => 'nullable|image'
         ]);
 
-        $path = $request->file('image')->store('/', 'public');
-
         if ($validator->fails()) {
             throw new ValidationException($validator->errors());
         }
@@ -39,6 +37,7 @@ class ProfileController extends Controller
         $validated = $validator->validated();
 
         if (!empty($request->file('image'))) {
+            $path = $request->file('image')->store('/', 'public');
             $validated['image'] = Storage::url($path);
         }
 

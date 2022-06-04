@@ -61,10 +61,9 @@ class CompanyController extends Controller
 
         $validated = $validator->validated();
 
-        $path = $request->file('image')->store('/', 'public');
-        $path1 = $request->file('bg-image')->store('/', 'public');
-
-        if (!empty($request->file('image'))) {
+        if (!empty($request->file('image')) || !empty($request->file('bg-image'))) {
+            $path = $request->file('image')->store('/', 'public');
+            $path1 = $request->file('bg-image')->store('/', 'public');
             $validated['image'] = Storage::url($path);
             $validated['bg-image'] = Storage::url($path1);
         }
