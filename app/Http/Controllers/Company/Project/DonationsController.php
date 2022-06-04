@@ -14,8 +14,8 @@ class DonationsController extends Controller
     public function create(Request $request, $alias)
     {
         $validator = Validator::make($request->all(), [
-            'plan_id' => 'integer',
-            'amount' => 'required|integer'
+            'plan_id' => 'nullable|integer',
+            'amount' => 'nullable|integer'
         ]);
 
         if ($validator->fails()) {
