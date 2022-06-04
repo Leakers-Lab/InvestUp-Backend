@@ -50,7 +50,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         // Router for Company
         Route::post('/company/register', [\App\Http\Controllers\Company\CompanyController::class, 'create']);
         Route::post('/company/{alias}/update', [\App\Http\Controllers\Company\CompanyController::class, 'update']);
-        Route::delete('/company/{alias}', [\App\Http\Controllers\Company\CompanyController::class, 'delete']);
+        Route::delete('/company/{alias}/delete', [\App\Http\Controllers\Company\CompanyController::class, 'delete']);
     });
 
     // Router for logout user
