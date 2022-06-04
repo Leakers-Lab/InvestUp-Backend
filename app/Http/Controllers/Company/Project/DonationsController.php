@@ -26,7 +26,7 @@ class DonationsController extends Controller
 
         $project = Project::where('alias', $alias)->first();
 
-        $plan = $project->Plans()->find($validated['plan_id']);
+        $plan = $project->Plans()->find($validated['plan_id'] ?? null);
         if ($plan) {
             $donate = $plan->Donations()->create([
                 'project_id' => $project->id,
