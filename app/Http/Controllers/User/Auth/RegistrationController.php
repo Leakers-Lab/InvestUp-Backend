@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,12 +20,18 @@ class RegistrationController extends Controller
 
         if (strlen($validated['phone']) == 9) $validated['phone'] = '998' . $validated['phone'];
 
+        if (!empty($request->file('image'))) {
+            $path = $request->file('image')->store('/', 'public');
+            $validated['image'] = env('APP_URL') . Storage::url($path);
+        }
+
         $user = User::create([
             'first_name' => ucwords(strtolower($validated['first_name'])),
             'last_name' => ucwords(strtolower($validated['last_name'])),
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'phone' => str_ireplace([' ', '(', ')', '+', '-'], '', $validated['phone']),
+            'image' => $validated['image'],
         ]);
 
         $token = $user->createToken($user->name . '-token')->plainTextToken;
@@ -42,6 +49,7 @@ class RegistrationController extends Controller
             'last_name' => 'required|string',
             'email' => 'required|string|unique:users',
             'phone' => 'required',
+            'image' => 'required|image',
         ]);
 
         if ($validator->fails()) {
