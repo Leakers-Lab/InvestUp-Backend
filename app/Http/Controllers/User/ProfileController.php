@@ -28,7 +28,6 @@ class ProfileController extends Controller
             'first_name' => 'nullable|string',
             'last_name' => 'nullable|string',
             'phone' => 'nullable',
-            'email' => 'nullable|email',
             'password' => 'nullable|confirmed',
         ]);
 
