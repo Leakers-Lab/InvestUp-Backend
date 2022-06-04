@@ -83,8 +83,8 @@ class CompanyController extends Controller
 
         $validator = Validator::make($request->all(), [
             'title' => 'nullable|string',
-            'address' => 'nullable|integer',
-            'phone' => 'nullable|date',
+            'address' => 'nullable|string',
+            'phone' => 'nullable',
             'image' => 'nullable|image',
             'bg-image' => 'nullable|image',
         ]);
