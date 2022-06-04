@@ -28,7 +28,7 @@ class DonationsController extends Controller
 
         if ($validated['plan_id']) {
             $plan = $project->Plans()->find($validated['plan_id']);
-            $donate = $plan = Donations()->create([
+            $donate = $plan->Donations()->create([
                 'project_id' => $project->id,
                 'user_id' => $request->user()->id,
                 'amount' => $plan->price,
