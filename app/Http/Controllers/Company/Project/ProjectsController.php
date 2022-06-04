@@ -31,7 +31,7 @@ class ProjectsController extends Controller
                 'title' => $project->title,
                 'alias' => $project->alias,
                 'target' => $project->target,
-                'deadline' => $project->target,
+                'deadline' => $project->deadline,
                 'content' => $project->content,
                 'image' => $project->image,
                 'status' => $project->status,
