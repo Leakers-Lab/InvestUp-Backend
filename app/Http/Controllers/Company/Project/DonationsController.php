@@ -14,7 +14,7 @@ class DonationsController extends Controller
     public function create(Request $request, $alias)
     {
         $validator = Validator::make($request->all(), [
-            'plan_id' => 'required|integer',
+            'plan_id' => 'integer',
             'amount' => 'required|integer'
         ]);
 
@@ -25,12 +25,23 @@ class DonationsController extends Controller
         $validated = $validator->validated();
 
         $project = Project::where('alias', $alias)->first();
-        $donate = $project->Plans()->find($validated['plan_id'])->Donations()->create([
-            'project_id' => $project->id,
-            'user_id' => $request->user()->id,
-            'amount' => $validated['amount'],
-            'status' => 'success'
-        ]);
+
+        if ($validated['pane_id']) {
+            $donate = $project->Plans()->find($validated['plan_id'])->Donations()->create([
+                'project_id' => $project->id,
+                'user_id' => $request->user()->id,
+                'amount' => $validated['amount'],
+                'status' => 'success'
+            ]);
+        } else {
+            $donate = Donation::create([
+                'plane_id' => null,
+                'project_id' => $project->id,
+                'user_id' => $request->user()->id,
+                'amount' => $validated['amount'],
+                'status' => 'success'
+            ]);
+        }
 
         return response()->json($donate);
     }
