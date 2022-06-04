@@ -104,5 +104,7 @@ class CompanyController extends Controller
 
         $company = $user->Companies->where('alias', $alias)->first();
         $company->update($validated);
+
+        return response()->json($company);
     }
 }
