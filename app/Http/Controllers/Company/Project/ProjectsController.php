@@ -21,6 +21,7 @@ class ProjectsController extends Controller
             $projects = Project::with(['Category', 'Company'])->where('status', 'active')->get();
         }
 
+        $formatted = [];
         foreach ($projects as $project) {
             $formatted[] = [
                 'id' => $project->id,
