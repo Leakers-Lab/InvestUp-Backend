@@ -77,8 +77,8 @@ class CompanyController extends Controller
         $validated['alias'] = $alias;
 
         $company = $user->Companies()->create($validated);
-
-        return response()->json(['error' => null]);
+        $company = Company::find($company);
+        return response()->json($company);
     }
 
     public function update(Request $request, $alias)
