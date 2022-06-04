@@ -26,7 +26,7 @@ class DonationsController extends Controller
 
         $project = Project::where('alias', $alias)->first();
 
-        if ($validated['pane_id']) {
+        if ($validated['plan_id']) {
             $donate = $project->Plans()->find($validated['plan_id'])->Donations()->create([
                 'project_id' => $project->id,
                 'user_id' => $request->user()->id,
@@ -35,7 +35,7 @@ class DonationsController extends Controller
             ]);
         } else {
             $donate = Donation::create([
-                'plane_id' => null,
+                'plan_id' => null,
                 'project_id' => $project->id,
                 'user_id' => $request->user()->id,
                 'amount' => $validated['amount'],
