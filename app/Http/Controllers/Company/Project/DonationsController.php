@@ -11,9 +11,27 @@ use Illuminate\Support\Facades\Validator;
 
 class DonationsController extends Controller
 {
-    public function create($alias, Request $request)
+    public function create(Request $request, $alias)
     {
+        $validator = Validator::make($request->all(), [
+            'amount' => 'required|integer'
+        ]);
 
+        if ($validator->fails()) {
+            throw new ValidationException($validator->errors());
+        }
+
+        $validated = $validator->validated();
+
+        $project = Project::where('alias', $alias)->first();
+        $donate = Donation::create([
+            'plane_id' => $project->Planes()->id,
+            'project_id' => $project->id,
+            'user_id' => $request->user()->id,
+            'amount' => $validated['amount']
+        ]);
+
+        return response()->json($donate);
     }
 
      public function index($alias)
