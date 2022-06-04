@@ -29,6 +29,7 @@ class ProjectsController extends Controller
                 'company_title' => $project->Company->title,
                 'company_alias' => $project->Company->alias,
                 'title' => $project->title,
+                'description' => $project->description,
                 'alias' => $project->alias,
                 'target' => $project->target,
                 'deadline' => $project->deadline,
