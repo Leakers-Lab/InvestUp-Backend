@@ -61,10 +61,13 @@ class CompanyController extends Controller
 
         $validated = $validator->validated();
 
-        if (!empty($request->file('image')) || !empty($request->file('bg-image'))) {
+        if (!empty($request->file('image'))) {
             $path = $request->file('image')->store('/', 'public');
-            $path1 = $request->file('bg-image')->store('/', 'public');
             $validated['image'] = Storage::url($path);
+        }
+
+        if (!empty($request->file('bg-image'))) {
+            $path1 = $request->file('bg-image')->store('/', 'public');
             $validated['bg-image'] = Storage::url($path1);
         }
 
@@ -95,10 +98,13 @@ class CompanyController extends Controller
 
         $validated = $validator->validated();
 
-        if (!empty($request->file('image')) || !empty($request->file('bg-image'))) {
+        if (!empty($request->file('image'))) {
             $path = $request->file('image')->store('/', 'public');
-            $path1 = $request->file('bg-image')->store('/', 'public');
             $validated['image'] = Storage::url($path);
+        }
+
+        if (!empty($request->file('bg-image'))) {
+            $path1 = $request->file('bg-image')->store('/', 'public');
             $validated['bg-image'] = Storage::url($path1);
         }
 
