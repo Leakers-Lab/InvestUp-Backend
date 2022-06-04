@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Donation;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class DonationsController extends Controller
@@ -51,6 +52,11 @@ class DonationsController extends Controller
      {
          $project = Project::with('Donations.User')->where('alias', $alias)->first();
 
-         return response()->json($project->Donations);
+         DB::update("SET SESSION sql_mode = 'IGNORE_SPACE,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'");
+
+         $count = DB::select("SELECT DISTINCT user_id FROM donations WHERE project_id = {$project->id}");
+         $sponsors = DB::select("SELECT * FROM donations INNER JOIN users ON donations.user_id = users.id WHERE project_id = {$project->id} GROUP BY user_id");
+
+         return response()->json(['total' => count($count), 'sponsors' => $sponsors]);
      }
 }
