@@ -28,7 +28,8 @@ class DonationsController extends Controller
         $donate = $project->Plans()->find($validated['plan_id'])->Donations()->create([
             'project_id' => $project->id,
             'user_id' => $request->user()->id,
-            'amount' => $validated['amount']
+            'amount' => $validated['amount'],
+            'status' => 'success'
         ]);
 
         return response()->json($donate);
