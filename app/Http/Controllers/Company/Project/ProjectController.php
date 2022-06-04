@@ -98,7 +98,7 @@ class ProjectController extends Controller
             $validated['image'] = Storage::url($path);
         }
 
-        $project = Project::where('alias', $alias)->first();
+        $project = $user->Projects()->where('alias', $alias)->first();
         $project->update($validated);
 
         return response()->json($project);

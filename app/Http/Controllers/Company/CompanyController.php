@@ -76,4 +76,9 @@ class CompanyController extends Controller
 
         return response()->json(['error' => null]);
     }
+
+    public function update(Request $request, $alias)
+    {
+        $user = $request->user();
+    }
 }

@@ -6,6 +6,7 @@ use App\Exceptions\ValidationException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -39,6 +40,10 @@ class ProfileController extends Controller
         if (!empty($request->file('image'))) {
             $path = $request->file('image')->store('/', 'public');
             $validated['image'] = Storage::url($path);
+        }
+
+        if (!empty($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
         }
 
         $user->update($validated);
