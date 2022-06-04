@@ -28,10 +28,10 @@ class PlansController extends Controller
         $project = Project::find($request->project_id);
 
         $validator = Validator::make($request->all(), [
-            'project_id' => 'required|integer',
-            'title' => 'required|string',
-            'content' => 'required|string',
-            'price' => 'required|numeric',
+            'plans.project_id' => 'required|integer',
+            'plans.title' => 'required|string',
+            'plans.content' => 'required|string',
+            'plans.price' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -39,9 +39,11 @@ class PlansController extends Controller
         }
 
         $validated = $validator->validated();
-        $validated['company_id'] = $project->Company->id;
 
-        $project->Plans()->create($validated);
+        foreach ($validated['plans'] as $plan) {
+            $plan['company_id'] = $project->Company->id;
+            $project->Plans()->create($plan);
+        }
 
         return response()->json(['error' => null]);
     }
