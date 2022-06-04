@@ -22,6 +22,7 @@ class CompanyController extends Controller
 
         $projects = $company->Projects()->with(['Category'])->where('status', 'active')->get();
 
+        $formatted = [];
         foreach ($projects as $project) {
             if ($project->Company->alias == $request['alias']) {
                 $formatted[] = [
