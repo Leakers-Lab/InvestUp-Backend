@@ -16,7 +16,7 @@ class ProjectsController extends Controller
             $projects = Project::with(['Category', 'Company'])
                 ->where('title', 'like', '%' . $request->search . '%')
                 ->where('status', 'active')
-                ->pagination(15);
+                ->get();
         } else {
             $projects = Project::with(['Category', 'Company'])->where('status', 'active')->get();
         }
