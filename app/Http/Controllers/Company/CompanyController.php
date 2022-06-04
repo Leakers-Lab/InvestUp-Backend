@@ -114,4 +114,15 @@ class CompanyController extends Controller
 
         return response()->json($company);
     }
+
+    public function delete(Request $request, $alias)
+    {
+        $user = $request->user();
+
+        $company = $user->Companies()->where('alias', $alias);
+        $projects = $user->Companies()->where('alias', $alias)->Projects()->delete();
+        $company->delete();
+
+        return response()->json(['error' => null]);
+    }
 }
