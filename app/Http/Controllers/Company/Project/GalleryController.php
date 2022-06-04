@@ -28,9 +28,9 @@ class GalleryController extends Controller
 
         $path = $request->file('file')->store('/', 'public');
         $user->Companies->find($project->company_id)->Projects()->find($project->id)->Galleries()->create([
-            'path' => Storage::url($path)
+            'path' => env('APP_URL') . Storage::url($path)
         ]);
 
-        return response()->json(['path' => Storage::url($path)]);
+        return response()->json(['path' => env('APP_URL') . Storage::url($path)]);
     }
 }

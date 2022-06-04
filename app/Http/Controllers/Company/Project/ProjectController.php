@@ -28,7 +28,7 @@ class ProjectController extends Controller
             'company_alias' => $project->Company->alias,
             'title' => $project->title,
             'target' => $project->target,
-            'deadline' => $project->target,
+            'deadline' => $project->deadline,
             'content' => $project->content,
             'image' => $project->image,
             'status' => $project->status,
@@ -65,7 +65,7 @@ class ProjectController extends Controller
         $path = $request->file('image')->store('/', 'public');
 
         if (!empty($request->file('image'))) {
-            $validated['image'] = Storage::url($path);
+            $validated['image'] = env('APP_URL') . Storage::url($path);
         }
 
         $company = $user->Companies()->find($validated['company_id'])->Projects()->create($validated);
@@ -95,7 +95,7 @@ class ProjectController extends Controller
 
         if (!empty($request->file('image'))) {
             $path = $request->file('image')->store('/', 'public');
-            $validated['image'] = Storage::url($path);
+            $validated['image'] = env('APP_URL') . Storage::url($path);
         }
 
         $project = $user->Companies()->find($validated['company_id'])->Projects()->where('alias', $alias)->first();
