@@ -12,7 +12,7 @@ class DonationsController extends Controller
 {
     public function create($alias, Request $request)
     {
-        $project = Project::where('alias', $alias)->first();
+        $project = Project::with('Plans')->where('alias', $alias)->first();
         $user = $request->user();
 
         $validator = Validator::make($request->all(), [
@@ -25,7 +25,7 @@ class DonationsController extends Controller
 
         $validated = $validator->validated();
 
-        $project->Plans()->Donations()->create([
+        $project->Plans->Donations->create([
             'user_id' => $user->id,
             'amount' => $validated(['amount']),
         ]);
