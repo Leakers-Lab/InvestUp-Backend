@@ -7,6 +7,7 @@ use App\Exceptions\ValidationException;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
@@ -50,8 +51,8 @@ class CompanyController extends Controller
             'title' => 'required|string',
             'address' => 'required|string',
             'phone' => 'required',
-            'image' => 'required|string',
-            'bg-image' => 'nullable|string',
+            'image' => 'required|image',
+            'bg-image' => 'nullable|image',
         ]);
 
         if ($validator->fails()) {
@@ -62,13 +63,16 @@ class CompanyController extends Controller
 
         $alias = md5($validated['title'] . time());
 
+        $path = $request->file('image')->store('/', 'public');
+        $path1 = $request->file('bg-image')->store('/', 'public');
+
         $company = $user->Companies()->create([
             'title' => $validated['title'],
             'alias' => $alias,
             'address' => $validated['address'],
             'phone' => $validated['phone'],
-            'image' => $validated['image'],
-            'bg-image' => $validated['bg-image'] ?? null,
+            'image' => Storage::url($path) ?? null,
+            'bg-image' => Storage::url($path1) ?? null,
         ]);
 
         return response()->json(['error' => null]);

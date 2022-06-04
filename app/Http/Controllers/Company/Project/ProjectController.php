@@ -60,7 +60,7 @@ class ProjectController extends Controller
 
         $alias = md5($validated['title'] . time());
 
-        $path = $request->file('file')->store('/', 'public');
+        $path = $request->file('image')->store('/', 'public');
 
         $company = $user->Companies()->find($validated['company_id'])->Projects()->create([
             'category_id' => $validated['category_id'],
@@ -70,7 +70,7 @@ class ProjectController extends Controller
             'target' => $validated['target'],
             'deadline' => $validated['deadline'],
             'content' => $validated['content'],
-            'image' => Storage::url($path),
+            'image' => Storage::url($path) ?? null,
         ]);
 
         return response()->json(['error' => null]);
@@ -80,7 +80,7 @@ class ProjectController extends Controller
     {
         $user = $request->user();
 
-        $path = $request->file('file')->store('/', 'public');
+        $path = $request->file('image')->store('/', 'public');
 
         $validator = Validator::make($request->all(), [
             'category_id' => 'required|integer',
@@ -89,7 +89,7 @@ class ProjectController extends Controller
             'target' => 'required|integer',
             'deadline' => 'required|date',
             'content' => 'required|string',
-            'image' => Storage::url($path),
+            'image' => Storage::url($path) ?? null,
         ]);
 
         if ($validator->fails()) {
