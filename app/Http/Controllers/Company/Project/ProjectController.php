@@ -60,18 +60,15 @@ class ProjectController extends Controller
 
         $alias = md5($validated['title'] . time());
 
+        $validated['alias'] = $alias;
+
         $path = $request->file('image')->store('/', 'public');
 
-        $company = $user->Companies()->find($validated['company_id'])->Projects()->create([
-            'category_id' => $validated['category_id'],
-            'company_id' => $validated['category_id'],
-            'title' => $validated['title'],
-            'alias' => $alias,
-            'target' => $validated['target'],
-            'deadline' => $validated['deadline'],
-            'content' => $validated['content'],
-            'image' => Storage::url($path) ?? null,
-        ]);
+        if (!empty($request->file('image'))) {
+            $validated['image'] = Storage::url($path);
+        }
+
+        $company = $user->Companies()->find($validated['company_id'])->Projects()->create($validated);
 
         return response()->json(['error' => null]);
     }

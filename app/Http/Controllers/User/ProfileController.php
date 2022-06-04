@@ -22,14 +22,15 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        $path = $request->file('image')->store('/', 'public');
-
         $validator = Validator::make($request->all(), [
             'first_name' => 'nullable|string',
             'last_name' => 'nullable|string',
             'phone' => 'nullable',
             'password' => 'nullable|confirmed',
+            'image' => 'nullable|image'
         ]);
+
+        $path = $request->file('image')->store('/', 'public');
 
         if ($validator->fails()) {
             throw new ValidationException($validator->errors());
@@ -37,7 +38,9 @@ class ProfileController extends Controller
 
         $validated = $validator->validated();
 
-        $validated['image'] = Storage::url($path) ?? null;
+        if (!empty($request->file('image'))) {
+            $validated['image'] = Storage::url($path);
+        }
 
         $user->update($validated);
 

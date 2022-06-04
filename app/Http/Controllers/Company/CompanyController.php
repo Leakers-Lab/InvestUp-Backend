@@ -61,19 +61,19 @@ class CompanyController extends Controller
 
         $validated = $validator->validated();
 
-        $alias = md5($validated['title'] . time());
-
         $path = $request->file('image')->store('/', 'public');
         $path1 = $request->file('bg-image')->store('/', 'public');
 
-        $company = $user->Companies()->create([
-            'title' => $validated['title'],
-            'alias' => $alias,
-            'address' => $validated['address'],
-            'phone' => $validated['phone'],
-            'image' => Storage::url($path) ?? null,
-            'bg-image' => Storage::url($path1) ?? null,
-        ]);
+        if (!empty($request->file('image'))) {
+            $validated['image'] = Storage::url($path);
+            $validated['bg-image'] = Storage::url($path1);
+        }
+
+        $alias = md5($validated['title'] . time());
+
+        $validated['alias'] = $alias;
+
+        $company = $user->Companies()->create($validated);
 
         return response()->json(['error' => null]);
     }
