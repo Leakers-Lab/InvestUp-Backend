@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/project/{alias}/update', [\App\Http\Controllers\Company\Project\ProjectController::class, 'update']);
 
         // Router for Project Plans
-        Route::post('/project/{alias}/plans/add', [\App\Http\Controllers\Company\Project\PlansController::class, 'create']);
+        Route::post('/project/plans/add', [\App\Http\Controllers\Company\Project\PlansController::class, 'create']);
         Route::post('/project/{alias}/comments/add', [\App\Http\Controllers\User\Comments\CommentsController::class, 'create']);
         Route::post('/project/{alias}/gallery/add', [\App\Http\Controllers\Company\Project\GalleryController::class, 'create']);
         Route::post('/project/{alias}/donations/add', [\App\Http\Controllers\Company\Project\DonationsController::class, 'create']);
