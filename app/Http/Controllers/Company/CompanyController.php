@@ -120,7 +120,7 @@ class CompanyController extends Controller
         $user = $request->user();
 
         $company = $user->Companies()->where('alias', $alias);
-        $projects = $user->Companies()->where('alias', $alias)->Projects()->delete();
+        $projects = $user->Companies()->where('alias', $alias)->first()->Projects()->delete();
         $company->delete();
 
         return response()->json(['error' => null]);
