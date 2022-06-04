@@ -7,6 +7,7 @@ use App\Exceptions\ValidationException;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
@@ -48,7 +49,7 @@ class ProjectController extends Controller
             'target' => 'required|integer',
             'deadline' => 'required|date',
             'content' => 'required|string',
-            'image' => 'required|string',
+            'image' => 'required|image',
         ]);
 
         if ($validator->fails()) {
@@ -59,6 +60,8 @@ class ProjectController extends Controller
 
         $alias = md5($validated['title'] . time());
 
+        $path = $request->file('file')->store('/', 'public');
+
         $company = $user->Companies()->find($validated['company_id'])->Projects()->create([
             'category_id' => $validated['category_id'],
             'company_id' => $validated['category_id'],
@@ -67,7 +70,7 @@ class ProjectController extends Controller
             'target' => $validated['target'],
             'deadline' => $validated['deadline'],
             'content' => $validated['content'],
-            'image' => $validated['image'],
+            'image' => Storage::url($path),
         ]);
 
         return response()->json(['error' => null]);
@@ -77,6 +80,8 @@ class ProjectController extends Controller
     {
         $user = $request->user();
 
+        $path = $request->file('file')->store('/', 'public');
+
         $validator = Validator::make($request->all(), [
             'category_id' => 'required|integer',
             'company_id' => 'required|integer',
@@ -84,7 +89,7 @@ class ProjectController extends Controller
             'target' => 'required|integer',
             'deadline' => 'required|date',
             'content' => 'required|string',
-            'image' => 'required|string',
+            'image' => Storage::url($path),
         ]);
 
         if ($validator->fails()) {
