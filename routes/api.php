@@ -25,7 +25,6 @@ Route::get('/category/{alias}', [\App\Http\Controllers\Company\Category\Category
 Route::get('/projects', [\App\Http\Controllers\Company\Project\ProjectsController::class, 'index']);
 Route::get('/project/{alias}', [\App\Http\Controllers\Company\Project\ProjectController::class, 'index']);
 Route::get('/project/{alias}/plans', [\App\Http\Controllers\Company\Project\PlansController::class, 'index']);
-Route::get('/project/{alias}/sponsors', [\App\Http\Controllers\Company\Project\DonationsController::class, 'index']);
 
 // Router for auth
 Route::post('/register', [\App\Http\Controllers\User\Auth\RegistrationController::class, 'index']);

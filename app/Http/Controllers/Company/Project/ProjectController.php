@@ -7,6 +7,7 @@ use App\Exceptions\ValidationException;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,11 +15,16 @@ class ProjectController extends Controller
 {
     public function index($alias)
     {
-        $project = Project::with(['Category', 'Company', 'Comments.User', 'Galleries'])->where('alias', $alias)->where('status', 'active')->first();
+        $project = Project::with(['Category', 'Company', 'Comments.User', 'Galleries', 'Donations.User'])->where('alias', $alias)->where('status', 'active')->first();
 
         if (!$project) {
             throw new NotFoundException('Project not found');
         }
+
+        DB::update("SET SESSION sql_mode = 'IGNORE_SPACE,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'");
+
+        $count = DB::select("SELECT DISTINCT user_id FROM donations WHERE project_id = {$project->id}");
+        $sponsors = DB::select("SELECT first_name, last_name, image, email FROM donations INNER JOIN users ON donations.user_id = users.id WHERE project_id = {$project->id} GROUP BY user_id");
 
         $formatted = [
             'id' => $project->id,
@@ -33,6 +39,8 @@ class ProjectController extends Controller
             'image' => $project->image,
             'status' => $project->status,
             'comments' => $project->Comments,
+            'total_sponsors' => count($count),
+            'sponsors' => $sponsors
         ];
 
         return response()->json($formatted);
