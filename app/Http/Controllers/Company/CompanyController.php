@@ -80,5 +80,29 @@ class CompanyController extends Controller
     public function update(Request $request, $alias)
     {
         $user = $request->user();
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'nullable|string',
+            'address' => 'nullable|integer',
+            'phone' => 'nullable|date',
+            'image' => 'nullable|image',
+            'bg-image' => 'nullable|image',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator->errors());
+        }
+
+        $validated = $validator->validated();
+
+        if (!empty($request->file('image')) || !empty($request->file('bg-image'))) {
+            $path = $request->file('image')->store('/', 'public');
+            $path1 = $request->file('bg-image')->store('/', 'public');
+            $validated['image'] = Storage::url($path);
+            $validated['bg-image'] = Storage::url($path1);
+        }
+
+        $company = $user->Companies->where('alias', $alias)->first();
+        $company->update($validated);
     }
 }
