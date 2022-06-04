@@ -24,6 +24,7 @@ class ProjectController extends Controller
         DB::update("SET SESSION sql_mode = 'IGNORE_SPACE,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'");
 
         $count = DB::select("SELECT DISTINCT user_id FROM donations WHERE project_id = {$project->id}");
+        $collected = DB::select("SELECT SUM(amount) as total FROM donations WHERE project_id = {$project->id}")[0]->total;
         $sponsors = DB::select("SELECT first_name, last_name, image, email FROM donations INNER JOIN users ON donations.user_id = users.id WHERE project_id = {$project->id} GROUP BY user_id");
 
         $formatted = [
@@ -40,7 +41,8 @@ class ProjectController extends Controller
             'status' => $project->status,
             'comments' => $project->Comments,
             'total_sponsors' => count($count),
-            'sponsors' => $sponsors
+            'sponsors' => $sponsors,
+            'collected' => $collected
         ];
 
         return response()->json($formatted);
