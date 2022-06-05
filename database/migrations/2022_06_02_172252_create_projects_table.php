@@ -19,6 +19,7 @@ class CreateProjectsTable extends Migration
             $table->unsignedBigInteger('company_id');
             $table->string('title');
             $table->string('alias');
+            $table->string('image');
             $table->integer('target')->nullable();
             $table->datetime('deadline')->nullable();
             $table->text('content')->nullable();

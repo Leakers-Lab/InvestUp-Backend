@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProjectsController extends Controller
 {
@@ -23,6 +24,7 @@ class ProjectsController extends Controller
 
         $formatted = [];
         foreach ($projects as $project) {
+            $collected = DB::select("SELECT SUM(amount) as total FROM donations WHERE project_id = {$project->id}")[0]->total;
             $formatted[] = [
                 'id' => $project->id,
                 'category_title' => $project->Category->title,
@@ -37,6 +39,7 @@ class ProjectsController extends Controller
                 'content' => $project->content,
                 'image' => $project->image,
                 'status' => $project->status,
+                'collected' => $collected ?? 0
             ];
         }
 

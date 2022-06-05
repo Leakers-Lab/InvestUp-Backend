@@ -19,6 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->string('title');
             $table->string('alias');
             $table->string('address');
+            $table->text('content');
             $table->string('phone');
             $table->string('image')->nullable();
             $table->string('bg-image')->nullable();
