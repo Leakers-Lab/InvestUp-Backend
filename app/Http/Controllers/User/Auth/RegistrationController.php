@@ -22,7 +22,7 @@ class RegistrationController extends Controller
 
         if (!empty($request->file('image'))) {
             $path = $request->file('image')->store('/', 'public');
-            $validated['image'] = "http://server.investup.uz" .Storage::url($path);
+            $validated['image'] = "https://server.investup.uz" .Storage::url($path);
         }
 
         $user = User::create([
