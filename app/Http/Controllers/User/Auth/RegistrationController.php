@@ -49,7 +49,7 @@ class RegistrationController extends Controller
             'last_name' => 'required|string',
             'email' => 'required|string|unique:users',
             'phone' => 'required',
-            'image' => 'required|image',
+            'image' => 'nullable|image',
         ]);
 
         if ($validator->fails()) {
