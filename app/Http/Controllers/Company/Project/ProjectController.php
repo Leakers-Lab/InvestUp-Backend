@@ -42,7 +42,7 @@ class ProjectController extends Controller
             'comments' => $project->Comments,
             'total_sponsors' => count($count),
             'sponsors' => $sponsors,
-            'collected' => $collected
+            'collected' => $collected ?? 0
         ];
 
         return response()->json($formatted);
