@@ -20,6 +20,7 @@ class RegistrationController extends Controller
 
         if (strlen($validated['phone']) == 9) $validated['phone'] = '998' . $validated['phone'];
 
+        $validated['image'] = null;
         if (!empty($request->file('image'))) {
             $path = $request->file('image')->store('/', 'public');
             $validated['image'] = "https://server.investup.uz" .Storage::url($path);
