@@ -79,9 +79,9 @@ class ProjectController extends Controller
             $validated['image'] = "https://server.investup.uz" .Storage::url($path);
         }
 
-        $company = $user->Companies()->find($validated['company_id'])->Projects()->create($validated);
+        $project = $user->Companies()->find($validated['company_id'])->Projects()->create($validated);
 
-        return response()->json(['error' => null]);
+        return response()->json($project);
     }
 
     public function update(Request $request, $alias)
